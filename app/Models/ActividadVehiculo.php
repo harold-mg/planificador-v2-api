@@ -17,7 +17,9 @@ class ActividadVehiculo extends Model
         'resultados_esperados',
         'fecha_inicio',
         'fecha_fin',
-        'centro_salud_id', // Mantener solo la relación con CentroSalud
+        //'centro_salud_id', // Mantener solo la relación con CentroSalud
+        'municipio_id',
+        'lugar',
         'tecnico_a_cargo',
         'detalles_adicionales',
         'estado_aprobacion',
@@ -35,9 +37,13 @@ class ActividadVehiculo extends Model
     }
 
     // Relación con CentroSalud
-    public function centroSalud()
+    /* public function centroSalud()
     {
         return $this->belongsTo(CentroSalud::class);
+    } */
+    public function municipio()
+    {
+        return $this->belongsTo(Municipio::class);
     }
     
     // Relación con User

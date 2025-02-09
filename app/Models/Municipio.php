@@ -22,8 +22,16 @@ class Municipio extends Model
     }
 
     // Relación con Centros de Salud
-    public function centrosSalud()
+    /* public function centrosSalud()
     {
         return $this->hasMany(CentroSalud::class);
+    } */
+    public function actividadesConVehiculo()
+    {
+        return $this->hasMany(ActividadVehiculo::class);
+    }
+    public function actividadesSinVehiculo()
+    {
+        return $this->hasMany(ActividadVehiculo::class);
     }
 }

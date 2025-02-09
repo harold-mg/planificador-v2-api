@@ -48,8 +48,8 @@
                 <td>{{ optional($actividad->poa->operaciones->find($actividad->detalle_operacion))->descripcion }}</td>
                 <td>{{ $actividad->fecha_inicio }}</td>
                 <td>{{ $actividad->fecha_fin }}</td>
-                <td>{{ $actividad->centroSalud->municipio->nombre }}</td>
-                <td>{{ $actividad->centroSalud->nombre }}</td>
+                <td>{{ $actividad->municipio->nombre }}</td>
+                <td>{{ $actividad->lugar }}</td>
             </tr>
             @endforeach
         </tbody>

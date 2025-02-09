@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\ActividadSinVehiculo;
 use Illuminate\Http\Request;
 use App\Models\POA; // Si tienes una tabla para los POAs
-use App\Models\CentroSalud; // Si tienes una tabla para los centros de salud
 use App\Models\Coordinacion;
 use App\Models\Municipio;
 
@@ -27,7 +26,8 @@ class ActividadSinVehiculoController extends Controller
             'resultados_esperados' => 'required|string',
             'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date',
-            'centro_salud_id' => 'required|exists:centros_salud,id',
+            'municipio_id' => 'required|exists:municipios,id',
+            'lugar' => 'required|string',
             'tecnico_a_cargo' => 'required|string',
             'detalles_adicionales' => 'nullable|string',
             'observaciones' => 'nullable|string',
@@ -53,7 +53,8 @@ class ActividadSinVehiculoController extends Controller
             'resultados_esperados' => $validated['resultados_esperados'],
             'fecha_inicio' => $validated['fecha_inicio'],
             'fecha_fin' => $validated['fecha_fin'],
-            'centro_salud_id' => $validated['centro_salud_id'],
+            'municipio_id' => $validated['municipio_id'],
+            'lugar' => $validated['lugar'],
             'tecnico_a_cargo' => $validated['tecnico_a_cargo'],
             'detalles_adicionales' => $validated['detalles_adicionales'],
             'estado_aprobacion' => 'pendiente', // Estado inicial de la actividad
@@ -75,7 +76,7 @@ class ActividadSinVehiculoController extends Controller
     // Método para obtener las actividades junto con POA y relaciones
     public function getActividadesPoa()
     {
-        $actividades = ActividadSinVehiculo::with(['poa.operaciones', 'usuario.area', 'usuario.unidad', 'centroSalud.municipio'])->get();
+        $actividades = ActividadSinVehiculo::with(['poa.operaciones', 'usuario.area', 'usuario.unidad', 'municipio'])->get();
         return response()->json($actividades);
     }
 
@@ -100,7 +101,7 @@ class ActividadSinVehiculoController extends Controller
     // Método para obtener una actividad por ID
     public function show($id)
     {
-        $actividad = ActividadSinVehiculo::with(['poa', 'centroSalud'])->findOrFail($id);
+        $actividad = ActividadSinVehiculo::with(['poa', 'municipio'])->findOrFail($id);
         return response()->json($actividad);
     }
 
@@ -121,7 +122,8 @@ class ActividadSinVehiculoController extends Controller
             'resultados_esperados' => 'required|string',
             'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date',
-            'centro_salud_id' => 'required|exists:centros_salud,id',
+            'municipio_id' => 'required|exists:municipios,id',
+            'lugar' => 'required|string',
             'tecnico_a_cargo' => 'required|string',
             'detalles_adicionales' => 'nullable|string',
         ]);

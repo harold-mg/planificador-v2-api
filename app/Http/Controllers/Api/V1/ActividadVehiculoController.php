@@ -31,7 +31,9 @@ class ActividadVehiculoController extends Controller
             'resultados_esperados' => 'required|string',
             'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date',
-            'centro_salud_id' => 'required|exists:centros_salud,id',
+            //'centro_salud_id' => 'required|exists:centros_salud,id',
+            'municipio_id' => 'required|exists:municipios,id',
+            'lugar' => 'required|string',
             'tecnico_a_cargo' => 'required|string',
             'detalles_adicionales' => 'nullable|string',
             'observaciones' => 'nullable|string',
@@ -58,7 +60,9 @@ class ActividadVehiculoController extends Controller
             'resultados_esperados' => $validated['resultados_esperados'],
             'fecha_inicio' => $validated['fecha_inicio'],
             'fecha_fin' => $validated['fecha_fin'],
-            'centro_salud_id' => $validated['centro_salud_id'],
+            //'centro_salud_id' => $validated['centro_salud_id'],
+            'municipio_id' => $validated['municipio_id'],
+            'lugar' => $validated['lugar'],
             'tecnico_a_cargo' => $validated['tecnico_a_cargo'],
             'detalles_adicionales' => $validated['detalles_adicionales'],
             //'usuario_id' => auth()->id(), // ID del usuario autenticado
@@ -85,7 +89,7 @@ class ActividadVehiculoController extends Controller
     public function getActividadesPoa()
     {
         // Cargar las actividades junto con las relaciones de POA y Operacion
-        $actividades = ActividadVehiculo::with(['poa.operaciones', 'usuario.area', 'usuario.unidad', 'centroSalud.municipio'])->get();
+        $actividades = ActividadVehiculo::with(['poa.operaciones', 'usuario.area', 'usuario.unidad', 'municipio'])->get();
         
         return response()->json($actividades);
     }
@@ -124,7 +128,7 @@ class ActividadVehiculoController extends Controller
     
     public function show($id)
     {
-        $actividad = ActividadVehiculo::with(['poa', 'centroSalud', 'vehiculo'])->findOrFail($id);
+        $actividad = ActividadVehiculo::with(['poa', 'municipio', 'vehiculo'])->findOrFail($id);
     
         return response()->json($actividad);
     }
@@ -145,7 +149,9 @@ class ActividadVehiculoController extends Controller
             'resultados_esperados' => 'required|string',
             'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date',
-            'centro_salud_id' => 'required|exists:centros_salud,id',
+            //'centro_salud_id' => 'required|exists:centros_salud,id',
+            'municipio_id' => 'required|exists:municipios,id',
+            'lugar' => 'required|string',
             'tecnico_a_cargo' => 'required|string',
             'detalles_adicionales' => 'nullable|string',
             'estado_aprobacion' => 'nullable|string',

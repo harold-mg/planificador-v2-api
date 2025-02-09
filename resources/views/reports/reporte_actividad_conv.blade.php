@@ -74,8 +74,8 @@
                 <td>{{ optional($actividad->poa->operaciones->find($actividad->detalle_operacion))->descripcion }}</td>
                 <td class="fecha">{{ \Carbon\Carbon::parse($actividad->fecha_inicio)->format('d-m-Y') }}</td>
                 <td class="fecha">{{ \Carbon\Carbon::parse($actividad->fecha_fin)->format('d-m-Y') }}</td>
-                <td>{{ $actividad->centroSalud->municipio->nombre }}</td>
-                <td>{{ $actividad->centroSalud->nombre }}</td>
+                <td>{{ $actividad->municipio->nombre }}</td>
+                <td>{{ $actividad->lugar }}</td>
             </tr>
             @endforeach
         </tbody>

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('unidades', function (Blueprint $table) {
             $table->id();
             $table->string('nombre')->unique();
+            $table->integer('prioridad')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

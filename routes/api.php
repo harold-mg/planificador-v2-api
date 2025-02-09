@@ -90,6 +90,7 @@ Route::middleware('auth:sanctum')->group(function () {
     
         //MUNICIPIOS
         Route::apiResource('municipios', MunicipioController::class);
+        Route::get('coordinacion/{coordinacionId}', [MunicipioController::class, 'getMunicipiosByCoordinacion']);
     
         //CENTRO DE SALUD
         Route::apiResource('centros_salud', CentroSaludController::class);
@@ -214,6 +215,7 @@ Route::get('municipio/{municipioId}', [CentroSaludController::class, 'getCentros
 Route::get('/coordinaciones', [CoordinacionController::class, 'index']);
 //MUNICIPIOS
 Route::apiResource('municipios', MunicipioController::class);
+Route::get('coordinacion/{coordinacionId}', [MunicipioController::class, 'getMunicipiosByCoordinacion']);
 
 //POAS
 //Route::apiResource('poas', PoaController::class);

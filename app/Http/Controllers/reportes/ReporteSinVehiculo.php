@@ -23,7 +23,7 @@ class ReporteSinVehiculo extends Controller
         $ultimoDiaDelMes = Carbon::createFromDate($year, $mes, 1)->endOfMonth();
 
         // Filtrar actividades dentro del rango de fechas
-        $actividades = ActividadSinVehiculo::with(['poa', 'centroSalud.municipio', 'usuario'])
+        $actividades = ActividadSinVehiculo::with(['poa', 'municipio', 'usuario'])
             ->where('estado_aprobacion', 'aprobado')
             ->whereBetween('fecha_inicio', [$primerDiaDelMes, $ultimoDiaDelMes])  // Rango de fechas
             ->get();

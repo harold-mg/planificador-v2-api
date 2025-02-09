@@ -18,7 +18,9 @@ return new class extends Migration
             $table->text('resultados_esperados');
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
-            $table->foreignId('centro_salud_id')->constrained('centros_salud')->onDelete('cascade');
+            //$table->foreignId('centro_salud_id')->constrained('centros_salud')->onDelete('cascade');
+            $table->foreignId('municipio_id')->constrained('municipios')->onDelete('cascade');
+            $table->string('lugar');
             $table->string('tecnico_a_cargo');
             $table->text('detalles_adicionales')->nullable();
             $table->enum('estado_aprobacion', ['pendiente', 'aprobado', 'rechazado'])->default('pendiente');

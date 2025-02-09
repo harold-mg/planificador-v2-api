@@ -20,7 +20,8 @@ class ActividadSinVehiculo extends Model
         'resultados_esperados',
         'fecha_inicio',
         'fecha_fin',
-        'centro_salud_id',
+        'municipio_id',
+        'lugar',
         'tecnico_a_cargo',
         'detalles_adicionales',
         'estado_aprobacion',
@@ -36,9 +37,9 @@ class ActividadSinVehiculo extends Model
         return $this->belongsTo(Poa::class);
     }
 
-    public function centroSalud()
+    public function municipio()
     {
-        return $this->belongsTo(CentroSalud::class, 'centro_salud_id');
+        return $this->belongsTo(Municipio::class);
     }
 
     public function usuario()
