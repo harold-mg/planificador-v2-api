@@ -29,7 +29,7 @@ class ActividadAuditorioController extends Controller
             'fecha' => 'required|date',  // Alineado con la migración
             'hora_inicio' => 'required|date_format:H:i',  // Ajustado según la migración
             'hora_fin' => 'required|date_format:H:i',  // Ajustado según la migración
-            'plataforma' => 'required|string',  // Según la migración
+            'lugar' => 'required|string',  // Según la migración
             'tecnico_a_cargo' => 'required|string',
             'participantes' => 'required|integer',
             'observaciones' => 'nullable|string',
@@ -57,7 +57,7 @@ class ActividadAuditorioController extends Controller
             'fecha' => $validated['fecha'],  // Usando el nombre correcto de la migración
             'hora_inicio' => $validated['hora_inicio'],  // Usando el nombre correcto de la migración
             'hora_fin' => $validated['hora_fin'],  // Usando el nombre correcto de la migración
-            'plataforma' => $validated['plataforma'],
+            'lugar' => $validated['lugar'],
             'tecnico_a_cargo' => $validated['tecnico_a_cargo'],
             'participantes' => $validated['participantes'],
             'estado_aprobacion' => 'pendiente', // Estado inicial de la actividad
@@ -126,7 +126,7 @@ class ActividadAuditorioController extends Controller
             'fecha' => 'required|date',
             'hora_inicio' => 'required|date_format:H:i',
             'hora_fin' => 'required|date_format:H:i',
-            'plataforma' => 'required|string',
+            'lugar' => 'required|string',
             'tecnico_a_cargo' => 'required|string',
             'participantes' => 'required|integer',
         ]);

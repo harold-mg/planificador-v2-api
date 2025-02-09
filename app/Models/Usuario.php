@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -10,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 class Usuario extends Authenticatable
 {
     use HasFactory, HasApiTokens, Notifiable;
-
+    use SoftDeletes;
     protected $fillable = [
         'nombre',
         'apellido',
@@ -22,7 +23,7 @@ class Usuario extends Authenticatable
         'area_id',
         'unidad_id'
     ];
-    
+    protected $dates = ['deleted_at'];
     // Relación con Area
     public function area()
     {

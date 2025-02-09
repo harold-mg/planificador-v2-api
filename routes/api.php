@@ -51,11 +51,15 @@ Route::middleware('auth:sanctum')->group(function () {
     // Solo los planificadores pueden acceder a estas rutas
     Route::middleware('check.planificador')->group(function () {
         // Asegúrate de tener esta ruta en routes/api.php
+        Route::get('/usuarios/eliminados', [AuthController::class, 'getDeletedUsers']);
         Route::get('/usuarios/{id}', [AuthController::class, 'getUsuario']);
         Route::put('/usuarios/{id}', [AuthController::class, 'updateUsuario']);
-        //Route::apiResource('/user', AuthController::class);
+        Route::delete('/usuarios/{id}', [AuthController::class, 'deleteUsuario']); // Eliminar usuario (soft delete)
         Route::post('/register', [AuthController::class, 'register']);
         Route::get('/usuarios', [AuthController::class, 'getAllUsers']);
+        Route::put('/usuarios/{id}/restore', [AuthController::class, 'restoreUsuario']); // Restaurar usuario eliminado
+        //Route::apiResource('/user', AuthController::class);
+
         //UNIDADES
         Route::apiResource('/unidades', UnidadController::class);
         Route::post('/unidades', [UnidadController::class, 'store']);

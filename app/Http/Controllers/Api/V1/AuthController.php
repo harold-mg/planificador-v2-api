@@ -85,31 +85,69 @@ class AuthController extends Controller
     }
     
     // En AuthController o UsuarioController
-    public function getAllUsers()
+    // Método para eliminar un usuario (soft delete)
+    public function deleteUsuario($id)
     {
-        // Obtener todos los usuarios de la base de datos con sus relaciones
-        $usuarios = Usuario::with(['area', 'unidad'])->get();
-    
-        // Mapear los usuarios para agregar la información de área o unidad
+        $usuario = Usuario::find($id);
+
+        if (!$usuario) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
+        $usuario->delete(); // Soft delete
+
+        return response()->json(['message' => 'Usuario eliminado correctamente']);
+    }
+
+    // Método para restaurar un usuario eliminado
+    public function restoreUsuario($id)
+    {
+        $usuario = Usuario::withTrashed()->find($id);
+
+        if (!$usuario) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
+        $usuario->restore(); // Restaurar el usuario eliminado
+
+        return response()->json(['message' => 'Usuario restaurado correctamente']);
+    }
+
+    // Método para obtener todos los usuarios (incluyendo o excluyendo los eliminados)
+    public function getAllUsers(Request $request)
+    {
+        $includeDeleted = $request->query('deleted', false); // Verifica si se quieren incluir eliminados
+
+        $query = Usuario::with(['area', 'unidad']);
+
+        if ($includeDeleted) {
+            $query->withTrashed(); // Incluir eliminados
+        }
+
+        $usuarios = $query->get();
+
         $usuariosConRelacion = $usuarios->map(function ($usuario) {
             $lugar = null;
-    
-            // Determina si el usuario tiene un área asignada
+
             if ($usuario->area) {
-                $lugar = $usuario->area->nombre;  // Asumiendo que 'nombre' es el campo en la tabla 'areas'
+                $lugar = $usuario->area->nombre;
             } elseif ($usuario->unidad) {
-                $lugar = $usuario->unidad->nombre; // Asumiendo que 'nombre' es el campo en la tabla 'unidades'
+                $lugar = $usuario->unidad->nombre;
             }
-    
-            // Agregar el campo 'lugar' al usuario
-            $usuario->lugar = $lugar;
-    
+
+            $usuario->setAttribute('lugar', $lugar);
+
             return $usuario;
         });
-    
-        // Retornar los usuarios con la nueva propiedad 'lugar'
+
         return response()->json($usuariosConRelacion);
     }
+    public function getDeletedUsers()
+    {
+        $usuarios = Usuario::onlyTrashed()->get(); // Solo los eliminados
+        return response()->json($usuarios);
+    }
+
     // Método para actualizar un usuario
     public function updateUsuario(Request $request, $id)
     {

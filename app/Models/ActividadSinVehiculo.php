@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ActividadSinVehiculo extends Model
 {
     use HasFactory;
-
+    use SoftDeletes;
     // Definir la tabla si no sigue el nombre plural de Laravel
     protected $table = 'actividades_sin_vehiculo';
 

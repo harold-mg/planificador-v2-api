@@ -13,6 +13,7 @@
         body {
             font-family: Arial, sans-serif;
             color: #333;
+
         }
 
         .container {
@@ -30,14 +31,15 @@
         }
 
         .info {
-            text-align: left;
+            text-align: center;
             font-size: 1.1em;
             margin-bottom: 20px;
         }
         .usuario-info {
             font-size: 1.2em; /* Ajusta el tamaño según sea necesario */
             font-weight: bold;
-            text-align: left;
+
+            text-align: center;
         }
 
         .table-container {
@@ -69,10 +71,23 @@
             color: #666;
             margin-top: 15px;
         }
+            /* Estilo para los logos */
+            .logo {
+            position: absolute;
+            top: 10px;
+            width: 75px;  /* Ajusta el tamaño del logo */
+        }
+        #logo1 {
+            left: 50px;  /* Alineación a la izquierda */
+        }
+        #logo2 {
+            right: 10px;  /* Alineación a la derecha */
+        }
     </style>
 </head>
 <body>
-
+<img id="logo1" src="{{ public_path('images/LOGO-SEDES-ICONO.png') }}" alt="Logo SEDES" class="logo">
+<img id="logo2" src="{{ public_path('images/logo-gob-dep-potosi.png') }}" alt="Logo Gobierno Potosí" class="logo">
     <div class="container">
         <h2>Reporte Personal de ACTIVIDADES CON VEHÍCULO</h2>
     
