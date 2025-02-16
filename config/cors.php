@@ -37,6 +37,7 @@ return [
         'reporte-mensual-virtual/*'],
     'allowed_methods' => ['*'],
     'allowed_origins' => ['http://localhost:4200'],  // Reemplaza con el dominio de tu Angular
+    //'allowed_origins' => ['https://n4m3zpnb-4200.brs.devtunnels.ms'],
     //'allowed_origins' => ['https://m8jfxbh1-4200.brs.devtunnels.ms'],  // Reemplaza con el dominio de tu Angular
     'allowed_headers' => ['*'],
     'exposed_headers' => [],

@@ -61,16 +61,23 @@ Route::middleware('auth:sanctum')->group(function () {
         //Route::apiResource('/user', AuthController::class);
 
         //UNIDADES
-        Route::apiResource('/unidades', UnidadController::class);
+        //Route::apiResource('/unidades', UnidadController::class);
         Route::post('/unidades', [UnidadController::class, 'store']);
         Route::get('/unidades', [UnidadController::class, 'index']);
         Route::get('/unidades/{id}', [UnidadController::class, 'show']);
-    
+        Route::put('/unidades/{id}', [UnidadController::class, 'update']);
+        Route::patch('/unidades/{id}/prioridad', [UnidadController::class, 'updatePrioridad']);
+        Route::delete('/unidades/{id}', [UnidadController::class, 'deleteUnidad']);
+        Route::get('/unidades-deleted', [UnidadController::class, 'getDeletedUnidades']); // Ver eliminadas
+        Route::get('/unidades-all', [UnidadController::class, 'getAllUnidades']); // Ver todas (incluyendo eliminadas)
+        Route::patch('/unidades/restore/{id}', [UnidadController::class, 'restoreUnidad']); // Restaurar
+        Route::delete('/unidades/force-delete/{id}', [UnidadController::class, 'forceDeleteUnidad']);// Eliminación permanente
         //AREAS
         Route::apiResource('/areas', AreaController::class);
         Route::post('/areas', [AreaController::class, 'store']);
         Route::get('/areas', [AreaController::class, 'index']);
         Route::get('/areas/{id}', [AreaController::class, 'show']);
+        Route::get('/areas-unidades', [AreaController::class, 'getAreasUnidades']);
     
         Route::get('/unidades/{unidad}/areas', [AreaController::class, 'getAreasPorUnidad']);
     
@@ -217,6 +224,8 @@ Route::get('/coordinaciones', [CoordinacionController::class, 'index']);
 Route::apiResource('municipios', MunicipioController::class);
 Route::get('coordinacion/{coordinacionId}', [MunicipioController::class, 'getMunicipiosByCoordinacion']);
 
+Route::get('/unidades', [UnidadController::class, 'index']);
+
 //POAS
 //Route::apiResource('poas', PoaController::class);
 Route::apiResource('poas', PoaController::class);
@@ -254,3 +263,5 @@ Route::post('/import-poa', [ExcelPoaDataController::class, 'importExcel']);
 
 // Ruta para obtener los datos en formato JSON
 Route::get('/obtenerapi-poa', [ExcelPoaDataController::class, 'apiImportExcel']);
+Route::get('/areas-unidades', [AreaController::class, 'getAreasUnidades']);
+Route::get('/unidades-areas', [UnidadController::class, 'getUnidadesAreas']);

@@ -39,6 +39,12 @@ class AreaController extends Controller
         $areas = Area::where('unidad_id', $unidadId)->get();
         return response()->json($areas);
     }
+    public function getAreasUnidades()
+    {
+        $areas = Area::with(['unidad'])->get();
+        return response()->json($areas);
+
+    }
     // Método para actualizar un área
     public function update(Request $request, $id)
     {

@@ -10,7 +10,8 @@ class Unidad extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = ['nombre'];
+    protected $fillable = ['nombre', 'prioridad'];
+    //protected $dates = ['deleted_at'];
 
     // Especificar la tabla 'unidades'
     protected $table = 'unidades';
