@@ -26,6 +26,7 @@ class ReporteConVehiculo extends Controller
         $actividades = ActividadVehiculo::with(['poa.operaciones', 'usuario.area', 'usuario.unidad', 'municipio'])
             ->where('estado_aprobacion', 'aprobado')
             ->whereBetween('fecha_inicio', [$primerDiaDelMes, $ultimoDiaDelMes])  // Rango de fechas
+            ->orderBy('fecha_inicio', 'asc')
             ->get();        
         // Verificar si hay actividades
         if ($actividades->isEmpty()) {

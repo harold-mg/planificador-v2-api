@@ -22,6 +22,7 @@ class ReporteSinVehiculo extends Controller
         $actividades = ActividadSinVehiculo::with(['poa.operaciones', 'usuario.area', 'usuario.unidad', 'municipio'])
             ->where('estado_aprobacion', 'aprobado')
             ->whereBetween('fecha_inicio', [$primerDiaDelMes, $ultimoDiaDelMes])
+            ->orderBy('fecha_inicio', 'asc')
             ->get();        
         if ($actividades->isEmpty()) {
             return response()->json(['error' => 'No se encontraron actividades para el mes y año seleccionados.'], 404);

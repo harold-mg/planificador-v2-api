@@ -80,7 +80,7 @@
     <table>
         <thead>
             <tr>
-                <th>Unidad/Área</th>
+                {{-- <th>Unidad/Área</th> --}}
                 <th>Código POA</th>
                 <th>Operación</th>
                 <th>Fecha Inicio</th>
@@ -97,13 +97,13 @@
                     });
                 @endphp
                 <tr>
-                    <td colspan="7"><strong>{{ $unidad->nombre }} 
+                    <td colspan="6"><strong>{{ $unidad->nombre }} 
                         @if($actividadesUnidad->isEmpty()) <span class="sin-actividades">- NO CUENTA CON ACTIVIDADES PARA ESTE MES</span> @endif
                     </strong></td>
                 </tr>
                 @foreach($actividadesUnidad as $actividad)
                     <tr>
-                        <td>{{ $unidad->nombre }}</td>
+                        {{-- <td>{{ $unidad->nombre }}</td> --}}
                         <td>{{ $actividad->poa->codigo_poa }}</td>
                         <td>{{ optional($actividad->poa->operaciones->find($actividad->detalle_operacion))->descripcion }}</td>
                         <td class="fecha">{{ \Carbon\Carbon::parse($actividad->fecha_inicio)->format('d-m-Y') }}</td>
@@ -120,13 +120,13 @@
                         });
                     @endphp
                     <tr>
-                        <td colspan="7" class="area"><strong>{{ $area->nombre }} 
+                        <td colspan="6" class="area"><strong>{{ $area->nombre }} 
                             @if($actividadesArea->isEmpty()) <span class="sin-actividades">- NO CUENTA CON ACTIVIDADES PARA ESTE MES</span> @endif
                         </strong></td>
                     </tr>
                     @foreach($actividadesArea as $actividad)
                         <tr>
-                            <td>{{ $area->nombre }}</td>
+                            {{-- <td>{{ $area->nombre }}</td> --}}
                             <td>{{ $actividad->poa->codigo_poa }}</td>
                             <td>{{ optional($actividad->poa->operaciones->find($actividad->detalle_operacion))->descripcion }}</td>
                             <td class="fecha">{{ \Carbon\Carbon::parse($actividad->fecha_inicio)->format('d-m-Y') }}</td>

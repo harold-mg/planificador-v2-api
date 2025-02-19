@@ -4,6 +4,7 @@ namespace App\Http\Controllers\reportes;
 
 use App\Http\Controllers\Controller;
 use App\Models\ActividadVirtual;
+use App\Models\Unidad;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -15,29 +16,32 @@ class ReporteVirtual extends Controller
         //$this->middleware('auth:sanctum');
     }
 
-    // Generar reporte mensual de actividades sin vehículo
     public function generarReporteMensual(Request $request, $mes, $year)
     {
-        // Obtener el primer y último día del mes seleccionado
         $primerDiaDelMes = Carbon::createFromDate($year, $mes, 1)->startOfMonth();
         $ultimoDiaDelMes = Carbon::createFromDate($year, $mes, 1)->endOfMonth();
 
-        // Filtrar actividades dentro del rango de fechas
-        $actividades = ActividadVirtual::with(['poa', 'usuario'])
+        $actividades = ActividadVirtual::with(['poa.operaciones', 'usuario.area', 'usuario.unidad'])
             ->where('estado_aprobacion', 'aprobado')
-            ->whereBetween('fecha', [$primerDiaDelMes, $ultimoDiaDelMes])  // Rango de fechas
+            ->whereBetween('fecha', [$primerDiaDelMes, $ultimoDiaDelMes])
+            ->orderBy('fecha', 'asc')
             ->get();
 
-        // Verificar si hay actividades
         if ($actividades->isEmpty()) {
             return response()->json(['error' => 'No se encontraron actividades para el mes y año seleccionados.'], 404);
         }
 
-        // Datos para el reporte
+        $unidades = Unidad::with(['areas'])->orderBy('prioridad', 'asc')->get();
+        $areasConUnidades = $unidades->map(function ($unidad) {
+            $unidad->areas = $unidad->areas->sortBy('id');
+            return $unidad;
+        });
+
         $data = [
             'mes' => $mes,
             'year' => $year,
             'actividades' => $actividades,
+            'unidades' => $areasConUnidades
         ];
 
         // Generar el PDF con DomPDF
